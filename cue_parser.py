@@ -42,6 +42,7 @@ class SCTE35_DATERANGE(SCTE35):
 class SCTE35_OATCLS(SCTE35):
     id: str
     binarydata: str
+    decoded: str
 
     def __str__(self):
         if self.decoded is None:
@@ -125,7 +126,7 @@ def parse_scte_35_oatcls(line, decode):
     pattern = r'#EXT-OATCLS-SCTE35:(.*)'
     match = re.search(pattern, line)
     if match:
-        cue = SCTE35_OATCLS(SCTE35Type.OATCLS, -1, None)
+        cue = SCTE35_OATCLS(SCTE35Type.OATCLS, -1, None, None)
         attributes = []
         field_text = match.group(1)
         attributes_str = field_text.split(',')

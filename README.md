@@ -1,9 +1,9 @@
 # HLS Adbreak Monitoring
 
 This script will monitor a HLS stream periodically until it finds a SCTE35 marker (cue-point) flagged with the corresponding tag. Supported tags are:
-- EXT-X-CUE-OUT/IN
-- EXT-X-DATERANGE
-- EXT-OATCLS-SCTE35
+- [EXT-X-CUE-OUT/IN](https://support.google.com/admanager/answer/13049027?hl=en)
+- [EXT-X-DATERANGE](https://datatracker.ietf.org/doc/html/draft-pantos-hls-rfc8216bis-04#section-4.4.2.7)
+- [EXT-OATCLS-SCTE35](https://cloud.google.com/livestream/docs/scte-ad-break-markers)
 - Any custom tag you can specify
 
 ## Purpose
@@ -11,6 +11,8 @@ This script will monitor a HLS stream periodically until it finds a SCTE35 marke
 The purpose of this project is to provide a tool for monitoring and analyzing ad-markers in HLS media playlists. This can be valuable for content creators, broadcasters, or developers who need to track and understand ad-markers for various purposes, such as ad insertion or content analytics.
 
 ## How It Works
+
+![workflow](workflow.png)
 
 1. **Input HLS Master Playlist URL**: Enters your master playlist URL as parameter of the script. Format must be HTTP(S) and ends with a valid .m3u8 extension (query parameters are supported)
 
@@ -68,7 +70,7 @@ Path: index_1_daterange.m3u8, bandwidth: 2665726, average-bandwidth: 2526299, re
 2023-10-13 17:16:43 - No ad break found
 Waiting 7000ms
 2023-10-13 17:16:50 - Ad break found!
-	ID=111.0, DURATION=None, PLANNED_DURATION=None, START_DATE=2023-10-13T10:31:00.000Z, BINARYDATA=/DBIAAAAAAAA///wBQb+ek2ItgAyAhdDVUVJSAAAGH+fCAgAAAAALMvDRBEAAAIXQ1VFSUgAABl/nwgIAAAAACyk26AQAACZcuND
+	ID=111.0, DURATION=None, PLANNED_DURATION=60, START_DATE=2023-10-13T10:31:00.000Z, BINARYDATA=/DBIAAAAAAAA///wBQb+ek2ItgAyAhdDVUVJSAAAGH+fCAgAAAAALMvDRBEAAAIXQ1VFSUgAABl/nwgIAAAAACyk26AQAACZcuND
 ```
 
 <ins>Example</ins>: Look for any EXT-X-OATCLS tag, stop once found and decode its binarydata
