@@ -120,7 +120,9 @@ def parse_master_playlist(master_playlist):
                 frame_rate = float(match[3])
             elif match[4]:
                 codecs = match[4]
-        if all(v is not None for v in [bandwidth, average_bandwidth, resolution, frame_rate, codecs]):
+        if all(v is None for v in [bandwidth, average_bandwidth, resolution, frame_rate, codecs]):
+            continue
+        else:
             if (index != len(lines)-1):
                 path = lines[index+1]
                 media_playlists.append(MediaPlaylist(path, bandwidth, average_bandwidth, resolution, frame_rate, codecs))
@@ -166,6 +168,7 @@ def main():
     if parsed_url.path.endswith(".m3u8") and parsed_url.scheme in ("http", "https"):
         media_playlists = fetchMasterPlaylist(master_playlist_url)
         if media_playlists is None:
+            print("Error: No media playlist found")
             return
 
         base_url = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, '', '', ''))
