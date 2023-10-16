@@ -18,9 +18,16 @@ class SCTE35:
 class SCTE35_OUT(SCTE35):
     id: str
     duration: float
+    binarydata: str
+    decoded: str
+
 
     def __str__(self):
-        return f"ID={self.id}, DURATION={self.duration}"
+        if self.binarydata is None:
+            return f"ID={self.id}, DURATION={self.duration}"
+        if self.decoded is None:
+            return f"ID={self.id}, DURATION={self.duration},BINARYDATA={self.binarydata}"
+        return f"ID={self.id}, DURATION={self.duration},BINARYDATA={self.binarydata}\n{self.decoded}"
 
 
 @dataclass
@@ -59,13 +66,13 @@ class SCTE35_CUSTOM(SCTE35):
         return f"{self.line}"
 
 
-def parse_scte_35_cue_out(line):
-    pattern = r'#EXT-X-CUE(?:-OUT)?:\s*(.*?)(?=\n|$)'
+def parse_scte_35_cue_out(line, decode):
+    pattern = r'#EXT-X-CUE(-OUT)?(-CONT)?:\s*(.*?)(?=\n|$)'
     match = re.search(pattern, line)
     if match:
-        cue = SCTE35_OUT(SCTE35Type.CUE, -1, None)
+        cue = SCTE35_OUT(SCTE35Type.CUE, -1, None, None, None)
         attributes = []
-        field_text = match.group(1)
+        field_text = match.group(3)
         attributes_str = field_text.split(',')
         for attribute_str in attributes_str:
             split = attribute_str.replace('"', '').split('=')
@@ -78,11 +85,19 @@ def parse_scte_35_cue_out(line):
 
             if value.isdigit():
                 value = float(value)
-            if key == "BREAKID" or key == "ID":
-                key = "ID"
+            if key.upper() == "BREAKID" or key == "ID":
                 cue.id = value
-            elif key == "DURATION":
+            elif key.upper() == "DURATION":
                 cue.duration = value
+            elif key.upper() == "SCTE35":
+                cue.binarydata = value
+            if decode:
+                try:
+                    c = Cue(cue.binarydata)
+                    c.decode()
+                    cue.decoded = c.get_json()
+                except:
+                    cue.decoded = "Failed to decode binarydata"
         return cue
 
 
@@ -101,16 +116,16 @@ def parse_scte_35_daterange(line, decode):
 
             if value.isdigit():
                 value = float(value)
-            if key == "BREAKID" or key == "ID":
+            if key.upper() == "BREAKID" or key == "ID":
                 key = "ID"
                 cue.id = value
-            elif key == "DURATION":
+            elif key.upper() == "DURATION":
                 cue.duration = value
-            elif key == "PLANNED-DURATION":
+            elif key.upper() == "PLANNED-DURATION":
                 cue.planned_duration = value
-            elif key == "SCTE35-OUT":
+            elif key.upper() == "SCTE35-OUT":
                 cue.binarydata = value
-            elif key == "START-DATE":
+            elif key.upper() == "START-DATE":
                 cue.start_date = value
             if decode:
                 try:
@@ -141,11 +156,10 @@ def parse_scte_35_oatcls(line, decode):
 
             if value.isdigit():
                 value = float(value)
-            if key == "BREAKID" or key == "ID":
+            if key.upper() == "BREAKID" or key == "ID":
                 key = "ID"
                 cue.id = value
-            if key == "BINARYDATA":
-                key = "BINARYDATA"
+            if key.upper() == "BINARYDATA":
                 cue.binarydata = value
             if decode:
                 try:

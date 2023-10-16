@@ -42,7 +42,7 @@ def extract_cues_from_media_playlist(media_playlist, adbreak_type, custom_match,
     for line in media_playlist.splitlines():
         cue = None
         if scte35_enum.CUE.name in line and (adbreak_type == scte35_enum.CUE.ALL or scte35_enum.CUE==adbreak_type):
-            cue = cue_parser.parse_scte_35_cue_out(line)
+            cue = cue_parser.parse_scte_35_cue_out(line, decode)
         elif scte35_enum.DATERANGE.name in line and (adbreak_type == scte35_enum.CUE.ALL or scte35_enum.DATERANGE==adbreak_type):
             cue = cue_parser.parse_scte_35_daterange(line, decode)
         elif scte35_enum.OATCLS.name in line and (adbreak_type == scte35_enum.CUE.ALL or scte35_enum.OATCLS==adbreak_type):
