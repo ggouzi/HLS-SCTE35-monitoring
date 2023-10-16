@@ -49,33 +49,45 @@ options:
 
 ## Examples
 
-<ins>Example</ins>: Look for any EXT-X-CUE-OUT tag and stop once found
+<ins>Example</ins>: Look for any EXT-X-DATERANGE tag and stop once found
 ```bash
 $ python3 hls-scte35-monitoring.py http://localhost:8000/demo_streams/demo_master_cue.m3u8 -t EXT-X-CUE
 
 Media Playlist found
-Path: index_1_cue.m3u8, bandwidth: 2665726, average-bandwidth: 2526299, resolution: 960x540, frame_rate: 29.97, codecs: avc1.640029,mp4a.40.2
+Path: index_1_daterange.m3u8, bandwidth: 2665726, average-bandwidth: 2526299, resolution: 960x540, frame_rate: 29.97, codecs: avc1.640029,mp4a.40.2
 
-2023-10-13 16:53:14 - No ad break found
-Waiting 7000ms
-2023-10-13 16:53:21 - No ad break found
-Waiting 7000ms
-2023-10-13 16:53:28 - Ad break found!
-	ID=1.0, DURATION=6.000
+2023-10-13 17:16:50 - Ad break found!
+	ID=111.0, DURATION=None, PLANNED_DURATION=60, START_DATE=2023-10-13T10:31:00.000Z, BINARYDATA=/DBIAAAAAAAA///wBQb+ek2ItgAyAhdDVUVJSAAAGH+fCAgAAAAALMvDRBEAAAIXQ1VFSUgAABl/nwgIAAAAACyk26AQAACZcuND
 Exiting..
 ```
 
-<ins>Example</ins>: Look for any EXT-X-CUE-DATERANGE tag and never stop
+<ins>Example</ins>: Look for any EXT-X-CUE-OUT tag and never stop
 ```bash
 $ python3 hls-scte35-monitoring.py http://localhost:8000/demo_streams/demo_master_daterange.m3u8 -t EXT-X-DATERANGE -e false
 
 Media Playlist found
-Path: index_1_daterange.m3u8, bandwidth: 2665726, average-bandwidth: 2526299, resolution: 960x540, frame_rate: 29.97, codecs: avc1.640029,mp4a.40.2
+Path: index_1_cue.m3u8, bandwidth: 2665726, average-bandwidth: 2526299, resolution: 960x540, frame_rate: 29.97, codecs: avc1.640029,mp4a.40.2
 
-2023-10-13 17:16:43 - No ad break found
-Waiting 7000ms
-2023-10-13 17:16:50 - Ad break found!
-	ID=111.0, DURATION=None, PLANNED_DURATION=60, START_DATE=2023-10-13T10:31:00.000Z, BINARYDATA=/DBIAAAAAAAA///wBQb+ek2ItgAyAhdDVUVJSAAAGH+fCAgAAAAALMvDRBEAAAIXQ1VFSUgAABl/nwgIAAAAACyk26AQAACZcuND
+2023-10-16 15:38:01 - No ad break found
+Waiting 5000ms
+2023-10-16 15:38:06 - No ad break found
+Waiting 5000ms
+2023-10-16 15:38:12 - No ad break found
+Waiting 5000ms
+2023-10-16 15:38:17 - Ad break found!
+	ID=-1, DURATION=153.12
+Waiting 5000ms
+2023-10-16 15:38:22 - Ad break found!
+	ID=-1, DURATION=153.12
+	ID=-1, DURATION=153.12,BINARYDATA=/AAWAAAAAAAAAAAABQaA9GcjgAAAc10q7g
+	ID=-1, DURATION=153.12,BINARYDATA=/AAWAAAAAAAAAAAABQaA9G4BUAAAqr2OfQ
+Waiting 5000ms
+2023-10-16 15:38:28 - Ad break found!
+	ID=-1, DURATION=153.12
+	ID=-1, DURATION=153.12,BINARYDATA=/AAWAAAAAAAAAAAABQaA9GcjgAAAc10q7g
+	ID=-1, DURATION=153.12,BINARYDATA=/AAWAAAAAAAAAAAABQaA9G4BUAAAqr2OfQ
+	ID=-1, DURATION=153.12,BINARYDATA=/AAWAAAAAAAAAAAABQaA9HTfIAAAE8xNAA
+Waiting 5000ms
 ```
 
 <ins>Example</ins>: Look for any EXT-X-OATCLS tag, stop once found and decode its binarydata
