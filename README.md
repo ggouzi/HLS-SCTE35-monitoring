@@ -25,6 +25,11 @@ The purpose of this project is to provide a tool for monitoring and analyzing ad
 ## Usage
 
 ```bash
+# Install Python Dependencies
+pip3 install -r requirements.txt
+```
+
+```bash
 usage: hls-scte35-monitoring.py [-h] [-e EXIT_IF_FOUND] [-d DECODE] [-t ADBREAK_TYPE | -c CUSTOM_MATCH] master_playlist_url
 
 positional arguments:
@@ -154,7 +159,6 @@ If you do not know what kind of tags are present in the playlists, you can use -
 
 - [argsparse](https://docs.python.org/3/library/argparse.html)
 - [threefive](https://github.com/futzu/scte35-threefive)
-- [urllib](https://docs.python.org/fr/3/library/urllib.html)
 
 ## License
 
