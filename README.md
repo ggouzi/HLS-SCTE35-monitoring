@@ -51,7 +51,7 @@ options:
 
 <ins>Example</ins>: Look for any EXT-X-DATERANGE tag and stop once found
 ```bash
-$ python3 hls-scte35-monitoring.py http://localhost:8000/demo_streams/demo_master_cue.m3u8 -t EXT-X-CUE
+$ python3 hls-scte35-monitoring.py http://localhost:8000/demo_streams/demo_master_daterange.m3u8 -t EXT-X-DATERANGE
 
 Media Playlist found
 Path: index_1_daterange.m3u8, bandwidth: 2665726, average-bandwidth: 2526299, resolution: 960x540, frame_rate: 29.97, codecs: avc1.640029,mp4a.40.2
@@ -63,7 +63,7 @@ Exiting..
 
 <ins>Example</ins>: Look for any EXT-X-CUE-OUT tag and never stop
 ```bash
-$ python3 hls-scte35-monitoring.py http://localhost:8000/demo_streams/demo_master_daterange.m3u8 -t EXT-X-DATERANGE -e false
+$ python3 hls-scte35-monitoring.py http://localhost:8000/demo_streams/demo_master_cue.m3u8 -t EXT-X-CUE -e false
 
 Media Playlist found
 Path: index_1_cue.m3u8, bandwidth: 2665726, average-bandwidth: 2526299, resolution: 960x540, frame_rate: 29.97, codecs: avc1.640029,mp4a.40.2
