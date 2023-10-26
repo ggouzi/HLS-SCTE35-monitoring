@@ -14,7 +14,7 @@ This project serves as a tool for monitoring and analyzing ad-markers in HLS med
 
 ## How It Works
 
-![workflow](workflow.png)
+![workflow](documentation/workflow.png)
 
 1. **Input HLS Master Playlist URL**: Provide your master playlist URL as a parameter for the script. The URL format must be HTTP(S) and end with a valid .m3u8 extension (query parameters are supported).
 
